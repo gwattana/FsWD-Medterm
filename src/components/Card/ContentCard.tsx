@@ -130,6 +130,7 @@ const ContentCard: NextPage<{ post: any }> = ({ post }) => {
             </Link>
             <Box
               noOfLines={4}
+              overflow={'hidden'}
               dangerouslySetInnerHTML={{
                 __html: post.excerpt.rendered
               }}
