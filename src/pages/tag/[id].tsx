@@ -6,14 +6,13 @@ import axios from "axios"
 import { AiFillTag } from "react-icons/ai";
 
 const Tag: NextPage<{ posts: any, tag: any }> = ({ posts, tag }) => {
-    console.log(tag)
     return (
         <Box mx={'5%'} mb={10}>
             <Center alignContent={'center'}>
-                <Box boxShadow={'rgba(0, 0, 0, 0.35) 0px 5px 15px;'} w={'20%'} h={20}>
+                <Box boxShadow={'rgba(0, 0, 0, 0.35) 0px 5px 15px;'} minW={'20%'} h={20} p={2}>
                     <Center h={'100%'}>
                         <HStack>
-                            <Icon as={AiFillTag} boxSize={6}  />
+                            <Icon as={AiFillTag} boxSize={6} />
                             <Text fontSize={24}> Tag : {tag.name}</Text>
                         </HStack>
                     </Center>

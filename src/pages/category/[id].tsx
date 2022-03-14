@@ -9,7 +9,7 @@ const Category: NextPage<{ posts: any, category: any }> = ({ posts, category }) 
     return (
         <Box mx={'5%'} mb={10}>
             <Center alignContent={'center'}>
-                <Box boxShadow={'rgba(0, 0, 0, 0.35) 0px 5px 15px;'} w={'20%'} h={20}>
+                <Box boxShadow={'rgba(0, 0, 0, 0.35) 0px 5px 15px;'} minW={'20%'} h={20} p={2}>
                     <Center h={'100%'}>
                         <HStack>
                             <Icon as={AiFillTag} boxSize={6} />

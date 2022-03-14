@@ -67,7 +67,7 @@ const ContentCard: NextPage<{ post: any }> = ({ post }) => {
   return (
     <Box
       height={200}
-      mx={'5%'}
+      mx={['0%', '5%', '5%']}
       borderRadius={10}
       // position={'relative'}
       boxShadow={'rgba(0, 0, 0, 0.35) 0px 5px 15px;'}

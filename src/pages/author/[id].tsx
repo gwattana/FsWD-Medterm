@@ -11,7 +11,7 @@ const AuthorPage: NextPage<{ author: User, posts: any }> = ({ author, posts }) =
     return (
         <Box mx={'10%'} p={5}>
             <Center alignContent={'center'}>
-                <Box boxShadow={'rgba(0, 0, 0, 0.35) 0px 5px 15px;'} w={'25%'} h={40}>
+                <Box boxShadow={'rgba(0, 0, 0, 0.35) 0px 5px 15px;'} minW={200} w={'25%'} h={40} p={2}>
                     <Center h={'50%'}>
                         <Icon as={HiUser} boxSize={6} />
                         <Text fontSize={24} ml={2} mt={1}>Author </Text>
