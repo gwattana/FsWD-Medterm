@@ -33,6 +33,7 @@ const NavLink = ({ title, link, fontSize }: { title: string, link: string, fontS
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
+    _focus={{}}
     href={link}>
     {title}
   </Link>
@@ -45,7 +46,7 @@ const Navbar: NextPage = () => {
     <>
       <Box px={4} mt={3}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <NavLink title={'Homepage'} link={'/'} fontSize={40} ></NavLink>
+          <NavLink title={'Home'} link={'/'} fontSize={40} ></NavLink>
           <Flex alignItems={'center'}>
             {/* <IconButton aria-label='Search database' isRound size={'lg'} onClick={toggleColorMode}
               icon={

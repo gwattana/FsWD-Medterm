@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useState, useEffect, useCallback } from 'react'
-import { Box, Grid, GridItem, Text, Avatar, HStack, Input, Textarea, Button, Link } from "@chakra-ui/react"
+import { Box, Grid, GridItem, Text, Avatar, HStack, Input, Textarea, Button, Link, Tag, TagLabel } from "@chakra-ui/react"
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
@@ -10,30 +10,55 @@ import { User } from "../../model/userModel"
 
 const postCommentUri = "https://fswd-wp.devnss.com/wp-json/wp/v2/comments"
 const userUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/users/'
+const tagUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/tags/'
+const categorieUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/categories/'
 
 const PostContent: NextPage<{ post: any }> = ({ post }) => {
 
     const { mutate } = useSWRConfig()
     const router = useRouter()
     const { id } = router.query
+    const [tags, setTags] = useState<any>([])
+    const [categories, setSategories] = useState<any>([])
     const [name, setName] = useState<string>("")
     const [comment, setComment] = useState<string>("")
-    const [count, setCount] = useState<number>(0)
     const [publisher, setPublisher] = useState<User>()
-    const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+    const tagColorHover = '#B5DEFF'
+    const categoriesColor = 'gray.500'
+
+    const fetcher = (url: string) => axios.get(url).then(res => res.data.reverse())
     const { data, error } = useSWR(
         `https://fswd-wp.devnss.com/wp-json/wp/v2/comments?post=${id}`,
         fetcher
     );
+
+    const getTags = useCallback(async () => {
+        let result: any = await Promise.all(post.tags.map(async (tag: any) => {
+            let result = await axios.get(tagUri + tag)
+            return result.data
+        }))
+        setTags(result)
+    }, [post.tags])
+
+    const getCategory = useCallback(async () => {
+        let result: any = await Promise.all(post.categories.map(async (categorie: any) => {
+            let result = await axios.get(categorieUri + categorie)
+            return result.data
+        }))
+        setSategories(result)
+    }, [post.categories])
+
     const getAuthor = useCallback(async () => {
         let result = await axios.get(userUri + post.author)
-        console.log(result.data);
         setPublisher(result.data)
     }, [post.author])
 
     useEffect(() => {
+        getTags()
+        getCategory()
         getAuthor()
-    }, [post, getAuthor])
+    }, [getTags, getCategory, getAuthor])
 
     if (!data) {
         return (<></>)
@@ -45,15 +70,14 @@ const PostContent: NextPage<{ post: any }> = ({ post }) => {
             content: comment,
             post: id
         }
-        console.log(body)
         try {
             await axios.post(postCommentUri, body, {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Basic ZnN3ZDpmc3dkLWNtcw=='
+                    'Authorization': 'Basic ZnN3ZDpmc3dkLWNtcw=='
                 }
             })
-            // setCount(count + 1)
+
             mutate(`https://fswd-wp.devnss.com/wp-json/wp/v2/comments?post=${id}`)
             setName("")
             setComment("")
@@ -90,6 +114,49 @@ const PostContent: NextPage<{ post: any }> = ({ post }) => {
                 }}>
 
             </Box>
+            <HStack mx={'7%'} mt={5}>
+                <Text fontSize={20}>Tags :</Text>
+                {
+                    tags.map((tag: any) => {
+                        return (
+                            <Link key={tag.name} href={`/tag/${tag.name}`} _focus={{}}>
+                                <Tag
+                                    size={'lg'}
+                                    variant='solid'
+                                    color={'#5ba4a4'}
+                                    bg='#d5dfdf'
+                                    cursor={'pointer'}
+                                >
+                                    <TagLabel>{tag.name}</TagLabel>
+                                </Tag>
+                            </Link>
+                        )
+                    })
+                }
+            </HStack>
+
+            <HStack mx={'7%'} mt={5}>
+            <Text fontSize={20}>Categories :</Text>
+                {categories.map((categorie: any) => {
+                    return (
+                        <Link
+                            href={`/category/${categorie.name}`}
+                            color={categoriesColor}
+                            textDecoration={'underline'}
+                            fontSize={18}
+                            // onClick={() => setSearch(tag)}
+                            _hover={{
+                                color: tagColorHover
+                            }}
+                            key={categorie.name}
+                            mr={2}
+                            _focus={{}}
+                        >
+                            {categorie.name}
+                        </Link>
+                    )
+                })}
+            </HStack>
             <Box mx={'5%'} my={'2%'}>
                 <Text fontSize={30} fontWeight="bold">Comments</Text>
                 {
@@ -152,7 +219,7 @@ const PostContent: NextPage<{ post: any }> = ({ post }) => {
                             value={name}
                             borderColor={'#41444B'}
                             bg={'snow'}
-                            w={'20%'}
+                            minW={'20%'}
                             h={10}
                             mt={3}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
@@ -170,7 +237,7 @@ const PostContent: NextPage<{ post: any }> = ({ post }) => {
                             placeholder='add your comment here ...'
                         />
                         <Button
-                            w={'8%'}
+                            minW={'8%'}
                             rightIcon={<ArrowForwardIcon />}
                             bg={'#2D46B9'}
                             color={'snow'}

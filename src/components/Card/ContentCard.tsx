@@ -74,6 +74,7 @@ const ContentCard: NextPage<{ post: any }> = ({ post }) => {
       mt={10}
       display={'flex'}
       flexDirection={'column'}
+      bg={'#f1eae5'}
     >
       <Grid templateColumns='repeat(3, 1fr)' h={'100%'}>
         <GridItem colSpan={2}>
@@ -102,6 +103,7 @@ const ContentCard: NextPage<{ post: any }> = ({ post }) => {
                       key={author.name}
                       mr={2}
                       noOfLines={1}
+                      _focus={{}}
                     >
                       {author.name}
                     </Link>
@@ -161,6 +163,7 @@ const ContentCard: NextPage<{ post: any }> = ({ post }) => {
                           }}
                           key={categorie.name}
                           mr={2}
+                          _focus={{}}
                         >
                           {categorie.name}
                         </Link>
@@ -175,7 +178,7 @@ const ContentCard: NextPage<{ post: any }> = ({ post }) => {
                 {
                   tags.map((tag: any) => {
                     return (
-                      <Link key={tag.name} href={`/tag/${tag.name}`}>
+                      <Link key={tag.name} href={`/tag/${tag.name}`} _focus={{}}>
                         <Tag
                           size={'md'}
                           variant='solid'
