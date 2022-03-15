@@ -4,10 +4,11 @@ import { useRouter } from 'next/router'
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import axios from 'axios'
 import { User } from "../../model/userModel"
+import {Post} from "../../model/postModel"
 import ContentCard from "../../components/Card/ContentCard"
 import { LinkIcon } from '@chakra-ui/icons'
 import { HiUser } from "react-icons/hi";
-const AuthorPage: NextPage<{ author: User, posts: any }> = ({ author, posts }) => {
+const AuthorPage: NextPage<{ author: User, posts: Post[] }> = ({ author, posts }) => {
     return (
         <Box mx={'10%'} p={5}>
             <Center alignContent={'center'}>

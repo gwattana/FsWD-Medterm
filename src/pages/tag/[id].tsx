@@ -4,8 +4,10 @@ import { Box, Grid, GridItem, Center, Text, Icon, HStack } from "@chakra-ui/reac
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import axios from "axios"
 import { AiFillTag } from "react-icons/ai";
+import {Post} from "../../model/postModel"
+import {Tag} from "../../model/tagModel"
 
-const Tag: NextPage<{ posts: any, tag: any }> = ({ posts, tag }) => {
+const Tag: NextPage<{ posts: Post[], tag: Tag }> = ({ posts, tag }) => {
     return (
         <Box mx={'5%'} mb={10}>
             <Center alignContent={'center'}>

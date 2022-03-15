@@ -25,11 +25,12 @@ import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import useSWR from "swr";
 import { User } from "../../model/userModel"
+import {Post} from "../../model/postModel"
 const tagUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/tags/'
 const categorieUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/categories/'
 const userUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/users/'
 
-const ContentCard: NextPage<{ post: any }> = ({ post }) => {
+const ContentCard: NextPage<{ post: Post }> = ({ post }) => {
   const [tags, setTags] = useState<any>([])
   const [categories, setSategories] = useState<any>([])
   const [author, setAuthor] = useState<User>()

@@ -7,13 +7,14 @@ import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import axios from 'axios'
 import useSWR, { useSWRConfig } from 'swr'
 import { User } from "../../model/userModel"
+import {Post} from "../../model/postModel"
 
 const postCommentUri = "https://fswd-wp.devnss.com/wp-json/wp/v2/comments"
 const userUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/users/'
 const tagUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/tags/'
 const categorieUri = 'https://fswd-wp.devnss.com/wp-json/wp/v2/categories/'
 
-const PostContent: NextPage<{ post: any }> = ({ post }) => {
+const PostContent: NextPage<{ post: Post }> = ({ post }) => {
 
     const { mutate } = useSWRConfig()
     const router = useRouter()
